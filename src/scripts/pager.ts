@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { createStalker } from "./stalker";
+import { initContact } from "./contact";
 import { refs, rebuildLoop, reset, hide, animateIn, animateOut, fontsReady, type SlideRefs } from "./slides";
 import type { IconStage } from "./three/icons";
 
@@ -80,6 +81,7 @@ export function enterPager(container: HTMLElement) {
     tryGo(current + (dy > 0 ? 1 : -1));
   };
   const onKey = (e: KeyboardEvent) => {
+    if (document.querySelector("dialog[open]")) return;
     if (["ArrowDown", "PageDown"].includes(e.key)) { e.preventDefault(); tryGo(current + 1); }
     if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); tryGo(current - 1); }
   };
@@ -114,6 +116,8 @@ export function enterPager(container: HTMLElement) {
   document.addEventListener("click", onDocClick, true);
   navs.forEach((n) => n.button.addEventListener("click", onNav));
 
+  const leaveContact = initContact(container);
+
   slides.forEach(reset);
   syncNav();
   fontsReady().then(() => {
@@ -133,6 +137,7 @@ export function enterPager(container: HTMLElement) {
 
   cleanup = () => {
     destroyed = true;
+    leaveContact();
     clearTimeout(resizeT);
     tl?.kill();
     stalker?.destroy();

@@ -322,6 +322,42 @@ main:focus, main:focus-visible, [data-character-canvas]:focus-visible { outline:
 }
 .c-toast.is-on { opacity: 1; translate: -50% 0; }
 
+/* Contact dialog */
+.c-contact {
+  margin: auto; width: min(460px, calc(100vw - 32px)); max-height: calc(100svh - 32px);
+  border: 0; border-radius: 24px; padding: 0; background: var(--c-paper); color: var(--c-ink);
+  box-shadow: 0 24px 60px #3c37283d;
+}
+.c-contact::backdrop { background: #3c372866; }
+.c-contact[open] { animation: contact-in .35s var(--ease-ui); }
+@keyframes contact-in { from { opacity: 0; translate: 0 16px; } }
+.c-contact__form { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 32px 28px 28px; }
+.c-contact__close { position: absolute; top: 14px; right: 16px; width: 36px; height: 36px; font-size: 26px; line-height: 1; border-radius: 50%; }
+@media (hover: hover) { .c-contact__close:hover { background: #3c37281a; } }
+.c-contact__title { font-size: 36px; line-height: 1.1; }
+.c-contact__lead { font-size: 13px; opacity: .7; margin-top: -6px; }
+.c-contact__field { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700; }
+.c-contact__field input, .c-contact__field textarea {
+  font: inherit; font-size: 15px; font-weight: 400; color: inherit; width: 100%;
+  background: #fff; border: 1px solid #3c372833; border-radius: 12px; padding: 11px 14px; resize: vertical;
+  transition: border-color .2s var(--ease-ui);
+}
+.c-contact__field input:focus-visible, .c-contact__field textarea:focus-visible { outline: none; box-shadow: none; border-color: var(--c-orange); }
+.c-contact__field [aria-invalid="true"] { border-color: #d4553b; }
+.c-contact__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.c-contact__status { font-size: 13px; min-height: 1.6em; }
+.c-contact__status.is-error { color: #c2412b; }
+.c-contact__send {
+  align-self: flex-end; font-size: 18px; color: #fff; background: var(--c-orange);
+  padding: 12px 32px; border-radius: 100vmax; transition: background .3s var(--ease-ui), opacity .3s;
+}
+@media (hover: hover) { .c-contact__send:hover { background: var(--c-ink); } }
+.c-contact__send:disabled { opacity: .5; pointer-events: none; }
+@media (max-width: 767px) {
+  .c-contact__form { padding: 28px 20px 20px; }
+  .c-contact__title { font-size: 30px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .p-home-loading__circle { animation: none; }
   .c-roll__text { transition: none; }
