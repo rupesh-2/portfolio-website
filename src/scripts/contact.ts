@@ -1,23 +1,17 @@
-/* Contact dialog on the work pager: opens from "Say Namaste!", posts to /api/contact. */
+/* Contact form on the work pager's contact slide: posts to /api/contact. */
 export function initContact(container: HTMLElement) {
-  const dialog = container.querySelector<HTMLDialogElement>("[data-contact]");
-  const form = dialog?.querySelector("form");
-  const status = dialog?.querySelector<HTMLElement>("[data-contact-status]");
+  const form = container.querySelector<HTMLFormElement>("[data-contact]");
+  const status = form?.querySelector<HTMLElement>("[data-contact-status]");
   const send = form?.querySelector<HTMLButtonElement>("[type=submit]");
-  if (!dialog || !form || !status || !send) return () => {};
+  if (!form || !status || !send) return () => {};
 
-  let openedAt = 0;
+  // time of first interaction; the API drops submissions that come too fast to be human
+  let startedAt = 0;
+  const onFocus = () => { startedAt ||= Date.now(); };
   const say = (msg: string, error = false) => {
     status.textContent = msg;
     status.classList.toggle("is-error", error);
   };
-  const open = () => {
-    openedAt = Date.now();
-    say("");
-    dialog.showModal();
-  };
-  const close = () => dialog.close();
-  const onBackdrop = (e: MouseEvent) => { if (e.target === dialog) close(); };
 
   const onSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -32,7 +26,7 @@ export function initContact(container: HTMLElement) {
 
     send.disabled = true;
     say("Sending…");
-    const body = { ...Object.fromEntries(new FormData(form)), t: openedAt };
+    const body = { ...Object.fromEntries(new FormData(form)), t: startedAt };
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -54,18 +48,10 @@ export function initContact(container: HTMLElement) {
     }
   };
 
-  const openers = [...container.querySelectorAll<HTMLElement>("[data-contact-open]")];
-  const closer = dialog.querySelector<HTMLElement>("[data-contact-close]");
-  openers.forEach((b) => b.addEventListener("click", open));
-  closer?.addEventListener("click", close);
-  dialog.addEventListener("click", onBackdrop);
+  form.addEventListener("focusin", onFocus);
   form.addEventListener("submit", onSubmit);
-
   return () => {
-    openers.forEach((b) => b.removeEventListener("click", open));
-    closer?.removeEventListener("click", close);
-    dialog.removeEventListener("click", onBackdrop);
+    form.removeEventListener("focusin", onFocus);
     form.removeEventListener("submit", onSubmit);
-    if (dialog.open) dialog.close();
   };
 }

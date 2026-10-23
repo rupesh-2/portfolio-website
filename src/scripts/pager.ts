@@ -64,7 +64,10 @@ export function enterPager(container: HTMLElement) {
     if (go(to)) last = performance.now();
   };
 
+  // let people type and scroll inside the contact form without flipping slides
+  const inForm = (e: Event) => !!(e.target as Element).closest?.("input, textarea, select");
   const onWheel = (e: WheelEvent) => {
+    if (inForm(e)) return;
     e.preventDefault();
     if (Math.abs(e.deltaY) < WHEEL_MIN) return;
     tryGo(current + (e.deltaY > 0 ? 1 : -1));
@@ -72,6 +75,7 @@ export function enterPager(container: HTMLElement) {
   let sx = 0, sy = 0;
   const onTouchStart = (e: TouchEvent) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; };
   const onTouchMove = (e: TouchEvent) => {
+    if (inForm(e)) return;
     const { clientX, clientY } = e.touches[0];
     const dy = sy - clientY;
     if (Math.abs(dy) < Math.abs(sx - clientX) || Math.abs(dy) < SWIPE_MIN) return;
@@ -81,7 +85,7 @@ export function enterPager(container: HTMLElement) {
     tryGo(current + (dy > 0 ? 1 : -1));
   };
   const onKey = (e: KeyboardEvent) => {
-    if (document.querySelector("dialog[open]")) return;
+    if (inForm(e)) return;
     if (["ArrowDown", "PageDown"].includes(e.key)) { e.preventDefault(); tryGo(current + 1); }
     if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); tryGo(current - 1); }
   };

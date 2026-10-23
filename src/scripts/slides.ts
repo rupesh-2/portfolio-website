@@ -27,7 +27,7 @@ export function refs(main: HTMLElement, background: HTMLElement | null): SlideRe
     track: background?.firstElementChild as HTMLElement | null,
     title: main.querySelector(".p-work__title > span, .p-work__title .inner"),
     image: main.querySelector(".p-work__image"),
-    fades: [...main.querySelectorAll<HTMLElement>(".p-work__text, .p-work__tags, .p-work__sub, .p-work__contacts")],
+    fades: [...main.querySelectorAll<HTMLElement>(".p-work__text, .p-work__tags, .p-work__sub, .p-work__contacts, .c-contact")],
     bgInners: background ? [...background.querySelectorAll<HTMLElement>("p span")] : [],
     loop: null,
   };

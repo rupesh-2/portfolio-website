@@ -22,18 +22,32 @@ const slides = [
       {cases.map((c) => <Slide id={c.slug} title={c.label.replace(" ", "")} href={`/work/${c.slug}/`} text={c.short} icon={c.icon} tags={c.tags} />)}
 
       <div class="p-work__slide" data-list="contact" id="contact">
-        <div class="p-work__item">
-          <button type="button" data-contact-open class="p-work__title p-work__title--link u-en c-rollhost">
-            <span class="inner">
-              <span class="c-roll">
-                <span class="c-roll__text">Say “Namaste!”</span>
-                <span class="c-roll__text c-roll__text--clone" aria-hidden="true">Say “Namaste!”</span>
-              </span>
-              <Arrow />
-            </span>
-          </button>
+        <div class="p-work__item p-work__item--contact">
+          <h2 class="p-work__title u-en"><span>Say “Namaste!”</span></h2>
           <p class="p-work__sub u-en">Drop me a message, okay?</p>
-          <div class="p-work__image p-work__image--large" data-icon="wave"><canvas aria-hidden="true"></canvas></div>
+          <form class="c-contact" data-contact novalidate>
+            <div class="c-contact__row">
+              <label class="c-contact__field">
+                <span>Name</span>
+                <input name="name" type="text" autocomplete="name" maxlength="80" required />
+              </label>
+              <label class="c-contact__field">
+                <span>Email</span>
+                <input name="email" type="email" autocomplete="email" maxlength="254" required />
+              </label>
+            </div>
+            <label class="c-contact__field">
+              <span>Message</span>
+              <textarea name="message" rows="4" maxlength="5000" required></textarea>
+            </label>
+            <label class="c-contact__hp" aria-hidden="true">
+              Company <input name="company" type="text" tabindex="-1" autocomplete="off" />
+            </label>
+            <div class="c-contact__foot">
+              <p class="c-contact__status" data-contact-status role="status"></p>
+              <button type="submit" class="c-contact__send u-en">Send</button>
+            </div>
+          </form>
           <div class="p-work__contacts">
             <button type="button" data-copy={profile.email}>{profile.email}</button>
             <a href={profile.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -50,30 +64,5 @@ const slides = [
       <div class="c-stalker u-en" data-stalker aria-hidden="true">View more <Arrow small color="#F7F5F1" /></div>
       <p class="c-copyright u-en">©rupesh bhandari</p>
     </div>
-
-    <dialog class="c-contact" data-contact aria-labelledby="contact-title">
-      <form class="c-contact__form" novalidate>
-        <button type="button" class="c-contact__close" data-contact-close aria-label="Close">×</button>
-        <h2 id="contact-title" class="c-contact__title u-en">Say “Namaste!”</h2>
-        <p class="c-contact__lead">I'll reply by email. You'll get a confirmation as soon as it's sent.</p>
-        <label class="c-contact__field">
-          <span>Name</span>
-          <input name="name" type="text" autocomplete="name" maxlength="80" required />
-        </label>
-        <label class="c-contact__field">
-          <span>Email</span>
-          <input name="email" type="email" autocomplete="email" maxlength="254" required />
-        </label>
-        <label class="c-contact__field">
-          <span>Message</span>
-          <textarea name="message" rows="5" maxlength="5000" required></textarea>
-        </label>
-        <label class="c-contact__hp" aria-hidden="true">
-          Company <input name="company" type="text" tabindex="-1" autocomplete="off" />
-        </label>
-        <p class="c-contact__status" data-contact-status role="status"></p>
-        <button type="submit" class="c-contact__send u-en">Send</button>
-      </form>
-    </dialog>
   </div>
 </Layout>
