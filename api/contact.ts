@@ -36,6 +36,9 @@ async function send(key: string, mail: Record<string, unknown>) {
     body: JSON.stringify(mail),
   });
   if (!res.ok) throw new Error(`Resend ${res.status}: ${await res.text()}`);
+  // the id is what to search for in Resend's Emails log if a message goes missing
+  const { id } = await res.json();
+  console.log(`sent ${id} to ${(mail.to as string[]).join(", ")}`);
 }
 
 export async function POST(req: Request) {
