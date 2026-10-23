@@ -26,7 +26,7 @@ const views: Record<string, { enter: (c: HTMLElement) => void; leave: () => void
   single: { enter: enterSingle, leave: leaveSingle },
 };
 
-const HEAD_TAGS = "meta[name='description'],meta[property^='og']";
+const HEAD_TAGS = "meta[name='description'],meta[property^='og'],meta[property^='profile'],meta[name^='twitter'],link[rel='canonical'],script[type='application/ld+json']";
 function swapHead(html: string) {
   const doc = new DOMParser().parseFromString(html, "text/html");
   document.title = doc.title;

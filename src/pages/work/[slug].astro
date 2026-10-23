@@ -9,9 +9,22 @@ export function getStaticPaths() {
 }
 
 const { c, next } = Astro.props;
+const site = Astro.site!.origin;
+const url = `${site}/work/${c.slug}/`;
+const schema = [
+  { "@type": "CreativeWork", "@id": `${url}#work`, url, name: c.title, description: c.short, creator: { "@id": `${site}/#person` }, keywords: c.tags?.join(", ") },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
+      { "@type": "ListItem", position: 2, name: "Work", item: `${site}/work/` },
+      { "@type": "ListItem", position: 3, name: c.title.split(":")[0], item: url },
+    ],
+  },
+];
 ---
 
-<Layout namespace="single" title={c.title.split(":")[0]} description={c.short}>
+<Layout namespace="single" title={c.title.split(":")[0]} description={c.short} schema={schema}>
   <div class="p-single">
     <SingleTitle text={c.title} />
     <section class="p-single-contents">
