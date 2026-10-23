@@ -10,6 +10,8 @@ const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[a-z]{2,}$/i;
 // kept in step with profile in src/data/site.ts
 const SITE = "https://bhandarirupesh.com.np";
 const LINKEDIN = "https://www.linkedin.com/in/rupesh-bhandari-5977b525a/";
+const WHATSAPP = "https://wa.me/9779810550900";
+const WHATSAPP_LABEL = "+977 981-0550900";
 const C = { paper: "#f7f5f1", card: "#ffffff", ink: "#3c3728", muted: "#7a7465", line: "#e8e3d9", orange: "#fea831" };
 const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
 const DISPLAY = "'Trebuchet MS', Helvetica, Arial, sans-serif";
@@ -76,7 +78,8 @@ function layout(preheader: string, body: string) {
     </td></tr>
     <tr><td style="padding:24px 4px 0;font-family:${FONT};font-size:12px;line-height:1.6;color:${C.muted};">
       <a href="${SITE}" style="color:${C.muted};">bhandarirupesh.com.np</a> &nbsp;·&nbsp;
-      <a href="${LINKEDIN}" style="color:${C.muted};">LinkedIn</a> &nbsp;·&nbsp; Lalitpur, Nepal
+      <a href="${LINKEDIN}" style="color:${C.muted};">LinkedIn</a> &nbsp;·&nbsp;
+      <a href="${WHATSAPP}" style="color:${C.muted};">WhatsApp</a> &nbsp;·&nbsp; Lalitpur, Nepal
     </td></tr>
   </table>
 </td></tr></table>
@@ -112,16 +115,18 @@ function confirmationEmail() {
       <h1 style="margin:0 0 16px;font-family:${DISPLAY};font-size:28px;line-height:1.25;color:${C.ink};">Thanks for reaching out! <span style="color:${C.orange};">🙏</span></h1>
       <p style="margin:0 0 14px;">Namaste,</p>
       <p style="margin:0 0 14px;">Your message came through on my portfolio and is sitting in my inbox now. I read every one and usually reply within one or two working days, straight to this email address.</p>
-      <p style="margin:0 0 28px;">In the meantime, feel free to look around my work or connect with me on LinkedIn.</p>
+      <p style="margin:0 0 28px;">In the meantime, feel free to look around my work, connect with me on LinkedIn, or message me on WhatsApp if it's urgent.</p>
       <div>
         <a href="${SITE}" style="${pill(C.orange)}">View my portfolio</a>
         <a href="${LINKEDIN}" style="${pill("#0a66c2")}">Connect on LinkedIn</a>
+        <a href="${WHATSAPP}" style="${pill("#1d9e4f")}">Chat on WhatsApp</a>
       </div>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;border-top:1px solid ${C.line};">
         <tr><td style="padding-top:20px;">
           <p style="margin:0;font-family:${DISPLAY};font-size:17px;font-weight:bold;color:${C.ink};">Rupesh Bhandari</p>
           <p style="margin:2px 0 0;font-size:13px;color:${C.muted};">Software Engineer · Lalitpur, Nepal</p>
           <p style="margin:8px 0 0;font-size:13px;"><a href="${SITE}" style="color:${C.ink};">bhandarirupesh.com.np</a> &nbsp;·&nbsp; <a href="${LINKEDIN}" style="color:${C.ink};">linkedin.com/in/rupesh-bhandari</a></p>
+          <p style="margin:4px 0 0;font-size:13px;">WhatsApp: <a href="${WHATSAPP}" style="color:${C.ink};">${WHATSAPP_LABEL}</a></p>
         </td></tr>
       </table>
       <p style="margin:24px 0 0;font-size:12px;color:${C.muted};">You're getting this because someone used this address on the contact form at bhandarirupesh.com.np. If it wasn't you, you can ignore this email.</p>`);
@@ -129,10 +134,11 @@ function confirmationEmail() {
 
 Thanks for reaching out! Your message came through on my portfolio and is sitting in my inbox now. I read every one and usually reply within one or two working days, straight to this email address.
 
-In the meantime, feel free to look around my work or connect with me on LinkedIn:
+In the meantime, feel free to look around my work, connect with me on LinkedIn, or message me on WhatsApp if it's urgent:
 
 Portfolio: ${SITE}
 LinkedIn:  ${LINKEDIN}
+WhatsApp:  ${WHATSAPP_LABEL} (${WHATSAPP})
 
 Rupesh Bhandari
 Software Engineer · Lalitpur, Nepal

@@ -10,6 +10,7 @@ export const profile = {
   email: "bhandarirupesh162@gmail.com",
   phone: "+977 984-0279689",
   linkedin: "https://www.linkedin.com/in/rupesh-bhandari-5977b525a/",
+  whatsapp: "https://wa.me/9779810550900",
   location: "Bagdol, Lalitpur, Nepal",
   description:
     "Rupesh Bhandari is a software engineer in Lalitpur, Nepal, building production web and mobile apps with React Native, Next.js and Laravel, and AI-driven data products.",
