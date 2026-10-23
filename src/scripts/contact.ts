@@ -26,7 +26,7 @@ export function initContact(container: HTMLElement) {
 
     send.disabled = true;
     say("Sending…");
-    const body = { ...Object.fromEntries(new FormData(form)), t: startedAt };
+    const body = { ...Object.fromEntries(new FormData(form)), elapsed: startedAt ? Date.now() - startedAt : null };
     try {
       const res = await fetch("/api/contact", {
         method: "POST",

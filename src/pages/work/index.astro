@@ -40,8 +40,9 @@ const slides = [
               <span>Message</span>
               <textarea name="message" rows="4" maxlength="5000" required></textarea>
             </label>
+            <!-- honeypot: deliberately not a name browsers autofill -->
             <label class="c-contact__hp" aria-hidden="true">
-              Company <input name="company" type="text" tabindex="-1" autocomplete="off" />
+              Leave empty <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
             </label>
             <div class="c-contact__foot">
               <p class="c-contact__status" data-contact-status role="status"></p>

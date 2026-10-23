@@ -4,7 +4,7 @@ import { resolveMx } from "node:dns/promises";
    sender, then a short confirmation to the sender. Mail goes out through Resend's REST API. */
 const OWNER = "bhandarirupesh162@gmail.com";
 const FROM = process.env.CONTACT_FROM || "Rupesh Bhandari <hello@bhandarirupesh.com.np>";
-const MIN_FILL_MS = 3000; // faster than this is a bot
+const MIN_FILL_MS = 2000; // filled in faster than this is a bot
 const LIMITS = { name: 80, email: 254, message: 5000 };
 const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[a-z]{2,}$/i;
 
@@ -56,8 +56,13 @@ export async function POST(req: Request) {
   const email = str("email").toLowerCase();
   const message = str("message");
 
-  // honeypot filled or form sent too fast: pretend it worked
-  if (str("company") || Date.now() - Number(data.t) < MIN_FILL_MS) return json(200, { ok: true });
+  // honeypot filled or form filled too fast: pretend it worked. The fill time is measured in
+  // the browser, so a visitor's clock being off doesn't matter.
+  const fillMs = typeof data.elapsed === "number" ? data.elapsed : NaN;
+  if (str("_gotcha") || (Number.isFinite(fillMs) && fillMs < MIN_FILL_MS)) {
+    console.log(`dropped as bot (honeypot: ${!!str("_gotcha")}, fill ms: ${fillMs})`);
+    return json(200, { ok: true });
+  }
 
   if (!name || name.length > LIMITS.name) return json(400, { error: "Please add your name.", field: "name" });
   if (email.length > LIMITS.email || !EMAIL_RE.test(email)) return json(400, { error: "That email address doesn't look right.", field: "email" });
