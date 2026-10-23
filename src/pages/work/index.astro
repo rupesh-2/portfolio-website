@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Slide from "../../components/Slide.astro";
+import Marquee from "../../components/Marquee.astro";
+import Arrow from "../../components/Arrow.astro";
+import { profile, cases, about } from "../../data/site";
+
+const slides = [
+  { id: "about", nav: "About", marquee: about.marquee },
+  ...cases.map((c) => ({ id: c.slug, nav: c.label, marquee: c.marquee })),
+  { id: "contact", nav: "Contact", marquee: "Don’t be shy. Feel free to say Namaste! Open to engineering roles and freelance work." },
+];
+---
+
+<Layout namespace="work" title="Work">
+  <div class="p-case">
+    <h1 class="u-sr">Work</h1>
+    <div class="p-work" data-pager>
+      {slides.map((s) => <Marquee id={s.id} text={s.marquee} />)}
+
+      <Slide id="about" title="About" href="/work/about/" text={about.short} icon="me" />
+      {cases.map((c) => <Slide id={c.slug} title={c.label.replace(" ", "")} href={`/work/${c.slug}/`} text={c.short} icon={c.icon} tags={c.tags} />)}
+
+      <div class="p-work__slide" data-list="contact" id="contact">
+        <div class="p-work__item">
+          <a href={`mailto:${profile.email}`} class="p-work__title p-work__title--link u-en c-rollhost">
+            <span class="inner">
+              <span class="c-roll">
+                <span class="c-roll__text">Say “Namaste!”</span>
+                <span class="c-roll__text c-roll__text--clone" aria-hidden="true">Say “Namaste!”</span>
+              </span>
+              <Arrow />
+            </span>
+          </a>
+          <p class="p-work__sub u-en">Send me an email or a LinkedIn message, okay?</p>
+          <div class="p-work__image p-work__image--large" data-icon="wave"><canvas aria-hidden="true"></canvas></div>
+          <div class="p-work__contacts">
+            <button type="button" data-copy={profile.email}>{profile.email}</button>
+            <a href={profile.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="p-work__nav" aria-label="Sections">
+        <ul>
+          {slides.map((s) => <li><button class="u-en" type="button" data-nav={s.id}><span class="label">{s.nav}</span><span class="dot" aria-hidden="true"></span></button></li>)}
+        </ul>
+      </nav>
+
+      <div class="c-stalker u-en" data-stalker aria-hidden="true">View more <Arrow small color="#F7F5F1" /></div>
+      <p class="c-copyright u-en">©rupesh bhandari</p>
+    </div>
+  </div>
+</Layout>

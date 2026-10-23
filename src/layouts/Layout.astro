@@ -1,0 +1,75 @@
+---
+import "../styles/global.css";
+import { profile, cases } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  namespace: "home" | "work" | "single";
+}
+
+const { title, description = profile.description, namespace } = Astro.props;
+const pageTitle = title ? `${title} | ${profile.name}` : `${profile.name} | Software Engineer`;
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f5f1" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700&family=Righteous&display=swap" rel="stylesheet" />
+    <script is:inline>history.scrollRestoration = "manual";</script>
+  </head>
+  <body data-barba="wrapper" class="l-wrapper">
+    <header class="l-header">
+      <div class="l-header__inner">
+        <div class="l-header__texts u-en">
+          <a class="l-header__logo" href="/">{profile.logo}</a>
+          <p class="l-header__text">{profile.disciplines.map((d, i) => <Fragment>{d}{i < profile.disciplines.length - 1 && <br />}</Fragment>)}</p>
+        </div>
+        <button class="l-header__menu-button" type="button" aria-label="Open menu" aria-controls="header-menu" aria-expanded="false">
+          <span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span>
+        </button>
+        <div class="l-header__menu" id="header-menu" inert>
+          <nav class="l-header__menu-nav u-en" aria-label="Main menu">
+            <ul class="l-header__ul">
+              <li class="l-header__li"><a href="/">Home</a></li>
+              <li class="l-header__li"><a href="/work/about/">About</a></li>
+            </ul>
+            <ul class="l-header__ul l-header__ul--case">
+              <li class="l-header__li-title">Work</li>
+              {cases.map((c) => <li class="l-header__li"><a href={`/work/${c.slug}/`}>{c.label}</a></li>)}
+            </ul>
+            <ul class="l-header__ul">
+              <li class="l-header__li"><a href="/work/?case=contact">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div data-barba="container" data-barba-namespace={namespace}>
+      <main class="l-main" tabindex="-1">
+        <slot />
+      </main>
+    </div>
+
+    <p class="u-sr" data-route-announcer role="status" aria-live="polite"></p>
+    <div class="l-transition" data-transition aria-hidden="true"></div>
+    <div class="c-toast" data-toast role="status"></div>
+
+    <script>
+      import "../scripts/app";
+    </script>
+  </body>
+</html>

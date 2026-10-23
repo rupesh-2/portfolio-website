@@ -1,0 +1,27 @@
+---
+import Slide from "./Slide.astro";
+import Marquee from "./Marquee.astro";
+import Arrow from "./Arrow.astro";
+
+interface Props {
+  next: { id: string; title: string; href: string; text: string; icon: string; tags?: string[]; marquee: string };
+}
+const { next } = Astro.props;
+---
+
+<section class="p-single-next" aria-label="Next">
+  <Marquee id={next.id} text={next.marquee} />
+  <Slide id={next.id} title={next.title} href={next.href} text={next.text} icon={next.icon} tags={next.tags} />
+  <div class="c-stalker u-en" data-stalker aria-hidden="true">View more <Arrow small color="#F7F5F1" /></div>
+</section>
+
+<div class="p-single-back u-en">
+  <a href="/work/" class="p-single-back__text c-rollhost">
+    <span class="c-roll">
+      <span class="c-roll__text">Back to list</span>
+      <span class="c-roll__text c-roll__text--clone" aria-hidden="true">Back to list</span>
+    </span>
+    <Arrow />
+  </a>
+  <p class="c-copyright c-copyright--static u-en">©rupesh bhandari</p>
+</div>

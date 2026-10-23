@@ -1,0 +1,53 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SingleTitle from "../../components/SingleTitle.astro";
+import SingleFooter from "../../components/SingleFooter.astro";
+import { about, cases, profile } from "../../data/site";
+const first = cases[0];
+---
+
+<Layout namespace="single" title="About" description={about.short}>
+  <div class="p-single">
+    <SingleTitle text={about.title} />
+    <section class="p-single-contents">
+      <div class="category"><p class="category__label">Software Engineer</p><p class="category__label">{profile.location}</p></div>
+
+      {about.sections.map((s) => (
+        <div class="body-group">
+          <h2 class="body-group__title"><span>{s.title}</span></h2>
+          <div class="body-group__contents">{s.paragraphs.map((p) => <p>{p}</p>)}</div>
+        </div>
+      ))}
+
+      <div class="body-group">
+        <h2 class="body-group__title"><span>Experience</span></h2>
+        <div class="body-group__contents">
+          <ul class="body-group__rows">
+            {about.experience.map((e) => <li><span class="k">{e.period}</span><span><b>{e.role}</b>{e.org} · {e.place}</span></li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="body-group">
+        <h2 class="body-group__title"><span>Skills</span></h2>
+        <div class="body-group__contents">
+          <ul class="body-group__rows">{about.skills.map((s) => <li><span class="k">{s.label}</span><span>{s.items}</span></li>)}</ul>
+        </div>
+      </div>
+
+      <div class="body-group">
+        <h2 class="body-group__title"><span>Education</span></h2>
+        <div class="body-group__contents">
+          <ul class="body-group__rows">{about.education.map((e) => <li><span class="k">{e.period}</span><span><b>{e.title}</b>{e.place}</span></li>)}</ul>
+        </div>
+      </div>
+
+      <div class="body-group">
+        <h2 class="body-group__title"><span>Off hours</span></h2>
+        <div class="body-group__contents"><p>Travelling, football and music. I speak English, Nepali and Hindi. References are available on request.</p></div>
+      </div>
+    </section>
+
+    <SingleFooter next={{ id: first.slug, title: first.label.replace(" ", ""), href: `/work/${first.slug}/`, text: first.short, icon: first.icon, tags: first.tags, marquee: first.marquee }} />
+  </div>
+</Layout>

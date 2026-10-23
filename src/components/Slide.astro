@@ -1,0 +1,21 @@
+---
+// One slide of the work pager, also reused for the "Next" teaser on single pages.
+interface Props {
+  id: string;
+  title: string;
+  href: string;
+  text: string;
+  icon: string;
+  tags?: string[];
+}
+const { id, title, href, text, icon, tags = [] } = Astro.props;
+---
+
+<div class="p-work__slide" data-list={id}>
+  <a href={href} class="p-work__item" data-slide-link>
+    <p class="p-work__title u-en"><span>{title}</span></p>
+    <div class="p-work__image" data-icon={icon}><canvas aria-hidden="true"></canvas></div>
+    <p class="p-work__text">{text}</p>
+    {tags.length > 0 && <div class="p-work__tags">{tags.map((t) => <p class="c-tag">{t}</p>)}</div>}
+  </a>
+</div>

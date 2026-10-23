@@ -1,0 +1,11 @@
+---
+interface Props { small?: boolean; color?: string }
+const { small = false, color = "#FEA831" } = Astro.props;
+const size = small ? 16 : 40;
+---
+
+<svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">
+  <path
+    d="M33.65 10.79 5.48 39.05a3.1 3.1 0 0 1-4.53 0 3.1 3.1 0 0 1 0-4.53L29.2 6.35H5.08A3.1 3.1 0 0 1 1.9 3.17 3.1 3.1 0 0 1 5.08 0h31.75A3.1 3.1 0 0 1 40 3.17v31.75a3.1 3.1 0 0 1-3.17 3.18 3.1 3.1 0 0 1-3.18-3.18V10.8Z"
+    fill={color}></path>
+</svg>

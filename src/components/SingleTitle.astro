@@ -1,0 +1,18 @@
+---
+// Splits the headline into per-character masks so each glyph can rise into place.
+// Characters are grouped per word so lines only break between words.
+interface Props { text: string }
+const { text } = Astro.props;
+const words = text.split(" ");
+---
+
+<div class="p-single-head">
+  <h1 class="p-single-head__title" aria-label={text}>
+    {words.map((w, wi) => (
+      <Fragment>
+        <span class="word" aria-hidden="true">{[...w].map((ch) => <span class="char"><span class="char__inner">{ch}</span></span>)}</span>
+        {wi < words.length - 1 && " "}
+      </Fragment>
+    ))}
+  </h1>
+</div>

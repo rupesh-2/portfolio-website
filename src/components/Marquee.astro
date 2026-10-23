@@ -1,0 +1,10 @@
+---
+interface Props { id: string; text: string }
+const { id, text } = Astro.props;
+---
+
+<div class="p-work__bg" aria-hidden="true" data-background={id}>
+  <div class="p-work__bg-track u-en">
+    <p><span>{text}</span></p>
+  </div>
+</div>

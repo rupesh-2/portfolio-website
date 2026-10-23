@@ -1,0 +1,43 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SingleTitle from "../../components/SingleTitle.astro";
+import SingleFooter from "../../components/SingleFooter.astro";
+import { cases } from "../../data/site";
+
+export function getStaticPaths() {
+  return cases.map((c, i) => ({ params: { slug: c.slug }, props: { c, next: cases[(i + 1) % cases.length] } }));
+}
+
+const { c, next } = Astro.props;
+---
+
+<Layout namespace="single" title={c.title.split(":")[0]} description={c.short}>
+  <div class="p-single">
+    <SingleTitle text={c.title} />
+    <section class="p-single-contents">
+      <div class="category">{c.tags.map((t) => <p class="category__label">{t}</p>)}</div>
+      <div class="meta">
+        <div><p class="meta__title">Scope</p><p class="meta__text">{c.scope}</p></div>
+        <div><p class="meta__title">Company · Period</p><p class="meta__text">{c.company}<br />{c.period}</p></div>
+        {c.link && <div><p class="meta__title">Live</p><p class="meta__text"><a href={c.link.href} target="_blank" rel="noopener">{c.link.label} ↗</a></p></div>}
+      </div>
+
+      {c.sections.map((s) => (
+        <div class="body-group">
+          <h2 class="body-group__title"><span>{s.title}</span></h2>
+          <div class="body-group__contents">
+            {s.paragraphs.map((p) => <p>{p}</p>)}
+            {s.points && <ul class="body-group__points">{s.points.map((p) => <li>{p}</li>)}</ul>}
+          </div>
+        </div>
+      ))}
+
+      <div class="body-group">
+        <h2 class="body-group__title"><span>Stack</span></h2>
+        <div class="body-group__contents"><ul class="body-group__stack">{c.stack.map((t) => <li>{t}</li>)}</ul></div>
+      </div>
+    </section>
+
+    <SingleFooter next={{ id: next.slug, title: next.label.replace(" ", ""), href: `/work/${next.slug}/`, text: next.short, icon: next.icon, tags: next.tags, marquee: next.marquee }} />
+  </div>
+</Layout>
