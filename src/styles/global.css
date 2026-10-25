@@ -325,17 +325,20 @@ main:focus, main:focus-visible, [data-character-canvas]:focus-visible { outline:
 /* Contact form (on the pager's contact slide) */
 .c-contact {
   width: 492px; max-width: calc(100vw - 32px); display: flex; flex-direction: column; gap: 12px; margin-top: 8px;
-  background: var(--c-paper); border-radius: 24px; padding: 16px; box-shadow: 0 12px 40px #3c37281f;
+  /* frosted glass: the orange marquee stays visible behind the form, softened enough to read over */
+  background: rgb(247 245 241 / .3); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  border: 1px solid rgb(255 255 255 / .6); border-radius: 24px; padding: 16px; box-shadow: 0 12px 40px #3c372814;
 }
 .c-contact__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .c-contact__field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; }
 .c-contact__field input, .c-contact__field textarea {
   font: inherit; font-size: 15px; font-weight: 400; color: inherit; width: 100%;
-  background: #fff; border: 1px solid #3c372833; border-radius: 12px; padding: 10px 14px; resize: none;
+  background: rgb(255 255 255 / .55); border: 1px solid #3c372833; border-radius: 12px; padding: 10px 14px; resize: none;
   transition: border-color .2s var(--ease-ui);
 }
-.c-contact__field input:focus-visible, .c-contact__field textarea:focus-visible { outline: none; box-shadow: none; border-color: var(--c-orange); }
+.c-contact__field input:focus-visible, .c-contact__field textarea:focus-visible { outline: none; box-shadow: none; border-color: var(--c-orange); background: rgb(255 255 255 / .85); }
 .c-contact__field [aria-invalid="true"] { border-color: #d4553b; }
+.c-contact__field ::placeholder { color: transparent; } /* labels do the job on desktop */
 .c-contact__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .c-contact__foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .c-contact__status { font-size: 13px; line-height: 1.4; }
@@ -349,9 +352,17 @@ main:focus, main:focus-visible, [data-character-canvas]:focus-visible { outline:
 @media (max-width: 767px) {
   .p-work__item--contact { top: 10px; }
   .p-work__item--contact .p-work__sub { display: none; }
-  .c-contact { gap: 10px; padding: 14px; }
-  .c-contact__row { grid-template-columns: 1fr; gap: 10px; }
-  .c-contact__field input, .c-contact__field textarea { font-size: 16px; padding: 9px 12px; }
+  .p-work__item--contact .p-work__title { font-size: 44px; }
+  /* no card on phones: just the fields over the marquee, labels become placeholders to save height */
+  .c-contact { gap: 8px; padding: 0; background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .c-contact__row { grid-template-columns: 1fr; gap: 8px; }
+  .c-contact__field > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .c-contact__field ::placeholder { color: #3c372899; }
+  .c-contact__field input, .c-contact__field textarea { font-size: 16px; padding: 10px 14px; }
+  .c-contact textarea { height: 88px; }
+  /* Send on the left so it never sits under the section dots in the bottom-right corner */
+  .c-contact__foot { flex-direction: row-reverse; justify-content: flex-end; }
+  .c-contact__send { padding: 10px 28px; font-size: 16px; }
 }
 @media (max-width: 767px) and (max-height: 700px) {
   .c-contact textarea { height: 72px; }
